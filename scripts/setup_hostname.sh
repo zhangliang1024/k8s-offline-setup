@@ -12,4 +12,4 @@ hostnamectl set-hostname ${1}
 hostnamectl status
 
 # 设置 hostname 解析，这个命令需要root账户才能执行。
-echo "127.0.0.1   $(hostname)" >> /etc/hosts 
+echo "127.0.0.1  $(hostname)" >> /etc/hosts 
