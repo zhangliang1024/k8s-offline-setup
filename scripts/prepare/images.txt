@@ -1,0 +1,18 @@
+# kubernetes 镜像
+registry.k8s.io/kube-apiserver:v1.29.0
+registry.k8s.io/kube-controller-manager:v1.29.0
+registry.k8s.io/kube-scheduler:v1.29.0
+registry.k8s.io/kube-proxy:v1.29.0
+registry.k8s.io/coredns/coredns:v1.11.1
+registry.k8s.io/pause:3.9
+registry.k8s.io/etcd:3.5.10-0
+
+# calico 镜像
+quay.io/tigera/operator:v1.30.9
+docker.io/calico/kube-controllers:v3.27.0
+docker.io/calico/cni:v3.27.0
+docker.io/calico/node:v3.27.0
+
+# dashboard 镜像
+kubernetesui/metrics-scraper:v1.0.8
+kubernetesui/dashboard:v2.7.0
