@@ -36,7 +36,19 @@ yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
     yum-utils \
     nfs-utils \
     bind-utils \
-    wget
+    wget \
+    jq \
+    psmisc \
+    vim \
+    net-tools \
+    telnet \
+    device-mapper-persistent-data \
+    lvm2 \
+    git \
+    lrzsz \
+    conntrack-tools \
+    libseccomp \
+    libtool-ltdl
 
 # docker 依赖包
 yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
@@ -92,4 +104,5 @@ yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
     perl
 
 mv -f ../../rpm/* /root/k8sOfflineSetup/packages
+
 

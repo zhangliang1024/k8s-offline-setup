@@ -97,7 +97,6 @@ sudo yum install -y kubeadm-1.29.0-150500.1.1  kubelet-1.29.0-150500.1.1 kubectl
 # 查看kubectl版本
 sudo kubectl version --client
 
-
 # 修改kubelet cgroup启动方式与docker一致
 sudo sed -i 's/KUBELET_EXTRA_ARGS=/KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"/g' /etc/sysconfig/kubelet
 # 启动kubectl

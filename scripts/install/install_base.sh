@@ -58,7 +58,6 @@ cat <<EOF >> /etc/security/limits.conf
 * hard memlock unlimited
 EOF
 
-
 echo -e "-----------配置系统日志持久化---------- \n"
 # 配置持久化
 systemctl status systemd-journald
@@ -87,5 +86,3 @@ systemctl restart systemd-journald
 echo -e "-----------重启服务器---------- \n"
 # 所有节点配置完内核后，重启服务器，保证重启后内核生效。
 reboot -h now
-
-# -------------------------基础环境准备-------------------------
