@@ -10,8 +10,7 @@
  # Copyright (c) 2024 by www.jingyou.com, All Rights Reserved. 
 ### 
 
-# 在 资源准备节点 执行
-# 准备搭建K8S环境，所需要的yum包\镜像\资源文件
+# 在资源准备节点执行，准备yum依赖包
 
 echo -e "-----------查看系统版本----------- \n"
 echo -e "查看操作系统：$(uname -a)"
@@ -93,8 +92,7 @@ yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
 yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
     perl
 
-wget https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
-cp elrepo-release-7.0-4.el7.elrepo.noarch.rpm /root/k8sOfflineSetup/packages
+mv -f elrepo-release-7.0-4.el7.elrepo.noarch.rpm /root/k8sOfflineSetup/packages
 
 # 如果之前安装过k8s 先卸载旧版本
 yum remove -y kubelet kubeadm kubectl

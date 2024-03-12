@@ -25,8 +25,7 @@ yum -y install perl
 # 导入elrepo gpg key
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 # 安装elrepo YUM源仓库
-wget https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
-yum install -y elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+yum install -y https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
 # 安装kernel-ml版本，ml为长期稳定版本，lt为长期维护版本
 yum --enablerepo="elrepo-kernel" install -y kernel-ml.x86_64
 # 设置grub2默认引导为0

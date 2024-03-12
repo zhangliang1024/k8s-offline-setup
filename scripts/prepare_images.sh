@@ -10,9 +10,9 @@
  # Copyright (c) 2024 by www.jingyou.com, All Rights Reserved. 
 ### 
 
-# 在 资源准备节点 执行
-# 准备搭建K8S环境，所需要的yum包\镜像\资源文件
+# 在 资源准备节点执行，准备搭建K8S环境镜像
 
+echo -e "-----------Docker环境准备----------- \n"
 # 卸载旧版本
 sudo yum remove docker*
 # 安装基础依赖
@@ -48,14 +48,11 @@ EOF
 sudo systemctl enable docker && systemctl daemon-reload && systemctl restart docker
 sudo docker version && docker info|grep systemd
 
-
 docker rmi -f $(docker images -q)
 rm -rf k8sOfflineSetup/images/*
 docker system prune
 
-# sudo tee ./pull_and_save_images.sh <<-'EOF'
-#!/bin/bash
-
+echo -e "----------- K8S 镜像准备----------- \n"
 # 定义镜像保存目录
 image_dir="/root/k8sOfflineSetup/images"
 
@@ -143,6 +140,3 @@ while IFS= read -r line; do
         fi
     fi
 done < images.txt
-
-# EOF
-# chmod +x pull_and_save_images.sh && ./pull_and_save_images.sh
