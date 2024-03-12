@@ -12,28 +12,7 @@
 
 # 在 master 节点和 worker 节点都要执行
 
-# 安装 docker
-# 参考文档如下
-# https://docs.docker.com/install/linux/docker-ce/centos/ 
-# https://docs.docker.com/install/linux/linux-postinstall/
-
-# 卸载旧版本
-sudo yum remove docker \
-    docker-client \
-    docker-client-latest \
-    docker-common \
-    docker-latest \
-    docker-latest-logrotate \
-    docker-logrotate \
-    docker-engine
-
-# 安装基础依赖
-sudo yum -y install vim net-tools yum-utils device-mapper-persistent-data lvm2
-
-# 安装docker
-sudo yum install -y docker-ce-23.0.0 docker-ce-cli-23.0.0 containerd.io-1.6.16
-
-# 配置damon.json
+# 配置 docker damon.json
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -60,11 +39,7 @@ sudo systemctl enable docker && systemctl daemon-reload && systemctl restart doc
 sudo docker version && docker info|grep systemd
 
 
-# 安装cri-docker
-sudo yum install -y cri-dockerd-0.3.8-3.el7.x86_64.rpm
-
-#修改第10行内容
+# 修改cri-docker 第10行内容
 sudo sed -i 's|ExecStart=/usr/bin/cri-dockerd --container-runtime-endpoint fd://|ExecStart=/usr/bin/cri-dockerd --container-runtime-endpoint fd:// --pod-infra-container-image=registry.k8s.io/pause:3.9 --network-plugin=cni|g' /usr/lib/systemd/system/cri-docker.service
-
 # 启动cri-docker
-sudo ystemctl daemon-reload && systemctl enable cri-docker && systemctl start cri-docker && systemctl status cri-docker
+sudo systemctl daemon-reload && systemctl enable cri-docker && systemctl start cri-docker && systemctl status cri-docker

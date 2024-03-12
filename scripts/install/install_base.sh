@@ -20,31 +20,21 @@ echo -e "操作系统：$(uname -a)"
 echo -e "操作系统版本：$(cat /etc/redhat-release)"
 echo -e "系统内核版本：$(uname -r)"
 
-echo -e "-----------份YUM源仓库----------- \n"
-mkdir -p /home/repo-back
-mv /etc/yum.repos.d/*.repo /home/repo-back
-
 echo -e "-----------升级系统内核----------- \n"
 ## 升级系统内核
-yum install -y perl
-# 安装elrepo YUM源仓库
-yum install -y elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+# 安装perl
+yum localinstall -y ../../packages/perl*.rpm
+# 导入elrepo的GPG密钥
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# 安装elrepo-release软件包
+yum localinstall -y ../../packages/elrepo-release*.rpm
 # 安装kernel-ml版本，ml为长期稳定版本，lt为长期维护版本
-yum --enablerepo="elrepo-kernel" install -y kernel-ml.x86_64
+yum localinstall -y --enablerepo="elrepo-kernel" ../../packages/kernel-ml*.rpm
+
 # 设置grub2默认引导为0
 grub2-set-default 0
 # 重新生成grub2引导文件
 grub2-mkconfig -o /boot/grub2/grub.cfg
-
-echo -e "-----------更新yum包缓存----------- \n"
-# 更新yum包
-yum -y update
-yum clean all && yum makecache fast
-
-
-echo -e "-----------安装基础工具包----------- \n"
-# 基础工具包
-yum install -y wget jq psmisc vim net-tools telnet yum-utils device-mapper-persistent-data lvm2 git lrzsz conntrack-tools libseccomp libtool-ltdl
 
 
 echo -e "-----------设置系统文件句柄----------- \n"

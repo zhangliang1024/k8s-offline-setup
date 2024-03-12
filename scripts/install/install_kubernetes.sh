@@ -3,7 +3,7 @@
 # 关闭防火墙
 sudo systemctl stop firewalld && systemctl disable firewalld && firewall-cmd --state
 # 设置防火墙为 Iptables 并设置空规则
-sudo yum -y install iptables-services && systemctl start iptables && systemctl enable
+sudo systemctl start iptables && systemctl enable
 sudo iptables -F && iptables-save
 
 # 关闭selinux
@@ -19,9 +19,6 @@ sudo timedatectl set-local-rtc 0
 sudo systemctl restart rsyslog
 sudo systemctl restart crond
 
-# 设置时间同步
-sudo yum -y remove ntpdate
-sudo yum install -y chrony 
 
 # 时间同步配置
 sudo sed -i '3s/server 0.centos.pool.ntp.org iburst/# server 0.centos.pool.ntp.org iburst/' /etc/chrony.conf  
@@ -72,8 +69,6 @@ sudo sysctl --system
 
 
 # 配置ipvs转发 
-# 安装ipset及ipvsadm
-sudo yum -y install ipvsadm ipset sysstat conntrack libseccomp
 
 # 不开启 ipvs 将会使用 iptables ，但效率低，官方推荐使用ipvs内核
 sudo cat > /etc/sysconfig/modules/ipvs.modules <<EOF
@@ -89,11 +84,8 @@ EOF
 sudo chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep ip_vs
 
 # 安装kubernetes
-# 卸载旧版本
-sudo yum remove -y kubelet kubeadm kubectl
 
 # 安装kubelet、kubeadm、kubectl
-sudo yum install -y kubeadm-1.29.0-150500.1.1  kubelet-1.29.0-150500.1.1 kubectl-1.29.0-150500.1.1
 # 查看kubectl版本
 sudo kubectl version --client
 
@@ -103,7 +95,7 @@ sudo sed -i 's/KUBELET_EXTRA_ARGS=/KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"/
 sudo systemctl enable --now kubelet && systemctl status kubelet
 
 # 安装自动补全工具(可选)
-sudo yum install -y bash-completion
+# sudo yum install -y bash-completion
 sudo source /usr/share/bash-completion/bash_completion
 sudo echo "source <(kubectl completion bash)" >> ~/.bashrc
 sudo source  ~/.bashrc   

@@ -47,8 +47,16 @@ yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
     git \
     lrzsz \
     conntrack-tools \
-    libseccomp \
-    libtool-ltdl
+    libseccomp
+
+yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
+        iptables-services
+
+# 内核升级
+yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
+    perl \
+    elrepo-release \
+    kernel-ml
 
 # docker 依赖包
 yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
@@ -103,6 +111,6 @@ yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
 yum install --downloadonly --downloaddir=/root/k8sOfflineSetup/packages \
     perl
 
-mv -f ../../rpm/* /root/k8sOfflineSetup/packages
+cp -nf ../../rpm/* /root/k8sOfflineSetup/packages
 
 

@@ -1,14 +1,21 @@
 #!/bin/bash
 
-rpm -ivh ../packages/deltarpm-3.6-3.el7.x86_64.rpm
-rpm -ivh ../packages/libxml2-python-2.9.1-6.el7_2.3.x86_64.rpm
-rpm -ivh ../packages/python-deltarpm-3.6-3.el7.x86_64.rpm
-rpm -ivh ../packages/createrepo-0.9.9-28.el7.noarch.rpm
+# 卸载旧版本
+sudo yum remove -y ntpdate
+sudo yum remove -y docker*
+sudo yum remove -y kubelet kubeadm kubectl
+# 安裝新依賴
+sudo yum localinstall -y ../../packages/*.rpm
 
-createrepo  /root/k8sOfflineSetup/packages
+sudo createrepo  /root/k8sOfflineSetup/packages
 
 # 备份现有源
-if [ -f "/etc/yum.repos.d/CentOS-Base.repo" ];then
-    mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak_$(date "+%Y-%m-%d_%H-%M-%S")
+sudo if [ -f "/etc/yum.repos.d/CentOs-Base.repo" ];then
+    mkdir -p /home/repo-back
+    mv /etc/yum.repos.d/*.repo /home/repo-back
 fi
-cp -f ../repos/CentOS-Media.repo /etc/yum.repos.d/
+sudo cp -f ../../repos/CentOS-Media.repo /etc/yum.repos.d/
+
+# 更新yum包
+sudo yum -y update
+sudo yum clean all && yum makecache fast
